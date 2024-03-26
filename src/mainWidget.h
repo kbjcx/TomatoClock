@@ -19,8 +19,8 @@ public:
     using TimeOutCallback = void (*)(void*);
 
 public:
-    MainWidget(QWidget* parent = nullptr);
-    ~MainWidget();
+    explicit MainWidget(QWidget* parent = nullptr);
+    ~MainWidget() override;
 
     void showTime();
     void setTimeOutCallback(TimeOutCallback, void*);
@@ -50,5 +50,5 @@ private:
     TomatoStatus status;
     int focusCount;
     TimeOutCallback callback;
-    void* arg;
+    void* mArg;
 };

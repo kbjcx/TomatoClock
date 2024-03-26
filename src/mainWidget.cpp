@@ -1,7 +1,6 @@
 #include "mainWidget.h"
 
 #include <QHBoxLayout>
-#include <QVBoxLayout>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QFile>
@@ -14,7 +13,7 @@ static int sLongRestTime = 0;
 
 
 void initConfig() {
-    QFile file("E:\\CPP\\QT\\TomatoClock\\config.json");
+    QFile file(R"(E:\CPP\QT\TomatoClock\config.json)");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
         QByteArray json = file.readAll();
         QJsonParseError parseError{};
@@ -36,7 +35,9 @@ void initConfig() {
 MainWidget::MainWidget(QWidget* parent)
     : QWidget(parent)
     , status(FOCUS)
-    , focusCount(0) {
+    , focusCount(0)
+    , callback(nullptr)
+    , mArg(nullptr) {
     // 初始化配置
     initConfig();
     focusTime = sWorkTime * 60;
@@ -76,12 +77,12 @@ MainWidget::MainWidget(QWidget* parent)
     buttonLayout->addWidget(startRestButton);
     buttonLayout->addWidget(giveUpRestButton);
 
-    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    auto* mainLayout = new QVBoxLayout(this);
     mainLayout->addWidget(countDownClockLabel);
     mainLayout->addLayout(buttonLayout);
 }
 
-MainWidget::~MainWidget() {}
+MainWidget::~MainWidget() = default;
 
 void MainWidget::showTime() {
     int min = countDownSeconds / 60;
@@ -139,7 +140,7 @@ void MainWidget::showFocus() {
 }
 
 void MainWidget::showRest() {
-    callback(arg);
+    callback(mArg);
     if (focusCount <= 3) {
         status = SHORT_REST;
         countDownSeconds = shortRestTime;
@@ -155,5 +156,5 @@ void MainWidget::showRest() {
 
 void MainWidget::setTimeOutCallback(TimeOutCallback cb, void* arg) {
     callback = cb;
-    this->arg = arg;
+    this->mArg = arg;
 }

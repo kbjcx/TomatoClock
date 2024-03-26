@@ -8,8 +8,8 @@ class Tomato : public QMainWindow {
     Q_OBJECT
 
 public:
-    Tomato(QWidget* parent = nullptr);
-    ~Tomato();
+    explicit Tomato(QWidget* parent = nullptr);
+    ~Tomato() override;
 
 private slots:
     void hideRemind();
@@ -21,6 +21,5 @@ public:
 private:
     MainWidget* mainWidget;
     RemindWidget* remindWidget;
-    QPushButton* button;
     QTimer* timer;
 };

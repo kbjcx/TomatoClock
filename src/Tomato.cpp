@@ -19,7 +19,7 @@ Tomato::Tomato(QWidget* parent)
     connect(timer, SIGNAL(timeout()), this, SLOT(hideRemind()));
 }
 
-Tomato::~Tomato() {}
+Tomato::~Tomato() = default;
 
 void Tomato::showRemind() {
     remindWidget->show();

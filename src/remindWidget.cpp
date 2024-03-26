@@ -9,6 +9,4 @@ RemindWidget::RemindWidget(QWidget* parent)
     textRemindLabel->setScaledContents(true);
     textRemindLabel->setAlignment(Qt::AlignCenter);
     textRemindLabel->setStyleSheet("background-color: grey; color: purple;");
-    
-    
 }

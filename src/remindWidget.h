@@ -8,8 +8,8 @@ class RemindWidget : public QWidget {
     Q_OBJECT
 
 public:
-    RemindWidget(QWidget* parent = nullptr);
-    ~RemindWidget() = default;
+    explicit RemindWidget(QWidget* parent = nullptr);
+    ~RemindWidget() override = default;
 
 private:
     QLabel* textRemindLabel;
