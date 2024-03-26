@@ -45,7 +45,8 @@ private:
     QPushButton* giveUpFocusButton;
     QPushButton* giveUpRestButton;
     int focusTime;
-    int restTime;
+    int shortRestTime;
+    int longRestTime;
     TomatoStatus status;
     int focusCount;
     TimeOutCallback callback;

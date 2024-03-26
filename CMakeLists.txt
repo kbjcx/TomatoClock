@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.5) # CMake install : https://cmake.org/download/
 project(Tomato LANGUAGES CXX)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(CMAKE_PREFIX_PATH "c:/Qt/Qt5.13.2/5.13.2/mingw73_64") # Qt Kit Dir
+set(CMAKE_PREFIX_PATH "F:/QT/5.13.2/mingw73_64") # Qt Kit Dir
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
@@ -15,7 +15,7 @@ add_compile_options("$<$<C_COMPILER_ID:MSVC>:/utf-8>")
 add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 add_executable(${PROJECT_NAME}
-    WIN32 # If you need a terminal for debug, please comment this statement 
+    # WIN32 # If you need a terminal for debug, please comment this statement
     ${srcs} 
 ) 
 target_link_libraries(${PROJECT_NAME} PRIVATE Qt5::Widgets) # Qt5 Shared Library

@@ -1,5 +1,6 @@
 #include "remindWidget.h"
 
+
 RemindWidget::RemindWidget(QWidget* parent)
     : QWidget(parent) {
     setWindowTitle(tr("提醒"));
@@ -7,4 +8,7 @@ RemindWidget::RemindWidget(QWidget* parent)
     textRemindLabel = new QLabel(tr("该休息啦"), this);
     textRemindLabel->setScaledContents(true);
     textRemindLabel->setAlignment(Qt::AlignCenter);
+    textRemindLabel->setStyleSheet("background-color: grey; color: purple;");
+    
+    
 }

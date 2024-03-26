@@ -2,13 +2,47 @@
 
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QFile>
+#include <QDebug>
+#include <iostream>
+
+static int sWorkTime = 0;
+static int sShortRestTime = 0;
+static int sLongRestTime = 0;
+
+
+void initConfig() {
+    QFile file("E:\\CPP\\QT\\TomatoClock\\config.json");
+    if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QByteArray json = file.readAll();
+        QJsonParseError parseError{};
+        QJsonDocument doc = QJsonDocument::fromJson(json, &parseError);
+        if (parseError.error == QJsonParseError::NoError) {
+            QJsonObject obj = doc.object();
+            sWorkTime = obj.value("focusTime").toInt();
+            sShortRestTime = obj.value("shortRest").toInt();
+            sLongRestTime = obj.value("longRest").toInt();
+        } else {
+            std::cout << "json error\n";
+        }
+        file.close();
+    } else {
+        std::cout << "json error\n";
+    }
+}
 
 MainWidget::MainWidget(QWidget* parent)
     : QWidget(parent)
-    , focusTime(20)
-    , restTime(5)
     , status(FOCUS)
     , focusCount(0) {
+    // 初始化配置
+    initConfig();
+    focusTime = sWorkTime * 60;
+    shortRestTime = sShortRestTime * 60;
+    longRestTime = sLongRestTime * 60;
+    
     QFont font("Arial", 40);
     font.setPointSize(40);
     countDownSeconds = focusTime;
@@ -85,7 +119,6 @@ void MainWidget::giveUpTimer() {
 }
 
 void MainWidget::startRest() {
-    countDownSeconds = restTime;
     timer->start();
     startRestButton->hide();
     giveUpRestButton->show();
@@ -103,19 +136,17 @@ void MainWidget::showFocus() {
     startFocusButton->show();
     showTime();
     status = FOCUS;
-    if (status == LONG_REST) {
-        focusCount = 0;
-    }
 }
 
 void MainWidget::showRest() {
     callback(arg);
     if (focusCount <= 3) {
         status = SHORT_REST;
-        countDownSeconds = restTime;
+        countDownSeconds = shortRestTime;
     } else {
         status = LONG_REST;
-        countDownSeconds = restTime;
+        focusTime = 0;
+        countDownSeconds = longRestTime;
     }
     giveUpFocusButton->hide();
     startRestButton->show();

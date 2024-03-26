@@ -23,7 +23,6 @@ Tomato::~Tomato() {}
 
 void Tomato::showRemind() {
     remindWidget->show();
-    qDebug() << "Hello\n";
     timer->start();
 }
 
